@@ -1,4 +1,7 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using WebNotes.Data;
+using Microsoft.EntityFrameworkCore;
+
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
@@ -7,6 +10,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContext<NotesDbContext>(options => options.UseSqlServer(
+        builder.Configuration.GetConnectionString("NotesDbConnectionString")));
+    
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
